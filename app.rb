@@ -9,6 +9,10 @@ configure do
   enable :cross_origin
 end
 
+configure :production do
+  require 'newrelic_rpm'
+end
+
 set :allow_origin, :any
 
 Pony.options = {
