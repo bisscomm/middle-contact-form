@@ -29,6 +29,7 @@ Pony.options = {
 }
 
 get '/' do
+  "There is nobody here except you!"
 end
 
 post '/' do
