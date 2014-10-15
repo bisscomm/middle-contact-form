@@ -33,18 +33,20 @@ get '/' do
 end
 
 post '/' do
-  
-  body  = params[:message]
-  body += "\n\nTel: #{params[:phone]}"
+  body = ""
+  params.each do |value|
+    body += "#{value[0]}: #{value[1]}\n"
+  end
+  puts body
 
   content_type :json
-  
+
   begin
     Pony.mail :to => ENV['email_recipients'],
               :from => "\"#{params[:name]}\" <#{params[:email]}>",
               :subject => ENV['email_subject'],
               :body => body
-    
+
     { "success" => 1 }.to_json
   rescue
     { "success" => 0, "errors" => {"sending" => "An error occurred while sending your message. Please try again later."} }.to_json
