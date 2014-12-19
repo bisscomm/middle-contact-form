@@ -3,7 +3,10 @@ require 'pony'
 require 'json'
 require 'sinatra/cross_origin'
 
-use Rack::Protection::HttpOrigin, origin_whitelist: ["http://localhost:4567", ENV['website_url']] # /!\ http://0.0.0.0:4567/ won't be working -> usefull for testing this protection behaviour :)
+domain = ENV['website_url']
+domain_wo_www = domain.sub(/www./, '')
+
+use Rack::Protection::HttpOrigin, origin_whitelist: ["http://localhost:4567", domain, domain_wo_www] # /!\ http://0.0.0.0:4567/ won't be working -> usefull for testing this protection behaviour :)
 
 configure do
   enable :cross_origin
